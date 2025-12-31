@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beni Seviyor Musun?</title>
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    text-align: center;
+}
 
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#evet {
+    background: #ff2d55;
+    color: white;
+}
+
+#hayir {
+    background: #555;
+    color: white;
+    position: absolute;
+}
+
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 24px;
+    animation: float 3s linear forwards;
+}
+
+@keyframes float {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-150px); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<h1>Beni seviyor musun? ❤️</h1>
+
+<button id="evet">Evet</button>
+<button id="hayir">Hayır</button>
+
+<script>
+let evetScale = 1;
+let hayirScale = 1;
+
+const evet = document.getElementById("evet");
+const hayir = document.getElementById("hayir");
+
+// Hayır kaçsın + evet büyüsün
+hayir.addEventListener("click", () => {
+    evetScale += 0.25;
+    hayirScale -= 0.15;
+
+    evet.style.transform = `scale(${evetScale})`;
+    hayir.style.transform = `scale(${hayirScale})`;
+
+    hayir.style.left = Math.random() * (window.innerWidth - 100) + "px";
+    hayir.style.top = Math.random() * (window.innerHeight - 50) + "px";
+
+    if (hayirScale <= 0.2) {
+        document.body.innerHTML = `
+        <div style="
+            width:100vw;
+            height:100vh;
+            background:#ff2d55;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            font-size:80px;
+            font-weight:bold;">
+            EVET ❤️
+        </div>`;
+    }
+});
+
+// Evet → kalpler + mesaj
+evet.addEventListener("click", () => {
+    createHeart();
+    alert("Ben de seni seviyorum ❤️");
+});
+
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = window.innerHeight + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 3000);
+}
+</script>
+
+</body>
+</html>
